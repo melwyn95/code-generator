@@ -1,15 +1,14 @@
 package reflection
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/melwyn95/code-generator-slides/cmd/common"
+)
 
 func TestMarshallJSON(t *testing.T) {
-	type Profile struct {
-		Name        string            `json:"name"`
-		Experience  float64           `json:"experience"`
-		Hobbies     []string          `json:"hobbies"`
-		RandomStuff map[string]string `json:"random_stuff"`
-	}
-	profile := Profile{
+
+	profile := common.Profile{
 		Name:       "Melwyn Saldanha",
 		Experience: 2.6,
 		Hobbies:    []string{"Solve rubix cubes", "Watch movies"},
