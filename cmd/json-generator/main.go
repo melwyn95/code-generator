@@ -18,6 +18,9 @@ const (
 		"bytes"
 		"strconv"
 	)
+
+	//DO NOT EDIT. This code is auto-generated using go:generate json-generator
+
 	`
 	helpers = `func truncateLastComma(buff *bytes.Buffer) {
 		if buff != nil {

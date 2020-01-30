@@ -5,6 +5,8 @@ import (
 	"strconv"
 )
 
+//DO NOT EDIT. This code is auto-generated using go:generate json-generator
+
 func truncateLastComma(buff *bytes.Buffer) {
 	if buff != nil {
 		bufflen := buff.Len()
