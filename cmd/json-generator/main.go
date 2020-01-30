@@ -16,12 +16,24 @@ const (
 	importStmnt = `package common
 	import (
 		"bytes"
-		"fmt"
+		"strconv"
 	)
 	`
-	funcStart = "func (p *%s) MarshalJSON() {\n var json bytes.Buffer\n"
-	endBlock  = "}\n"
-	ignoreTag = "@@"
+	helpers = `func truncateLastComma(buff *bytes.Buffer) {
+		if buff != nil {
+			bufflen := buff.Len()
+			if bufflen > 0 && string(buff.Bytes()[bufflen-1:]) == "," {
+				buff.Truncate(bufflen - 1)
+			}
+		}
+	}
+	`
+	funcStart   = "func (p *%s) MarshalJSON() ([]byte, error) {\n var json bytes.Buffer\n"
+	returnStmnt = "return json.Bytes(), nil"
+	endBlock    = "}\n"
+	ignoreTag   = "@@"
+	INT_TYPE    = "int"
+	STRING_TYPE = "string"
 )
 
 var buff bytes.Buffer
@@ -93,11 +105,20 @@ func getValueFromTag(tag string) (string, error) {
 	return "", errors.New("error: tag value not present")
 }
 
-func processPrimitiveValue(tagValue, fieldName string) {
+func processPrimitiveValue(tagValue, fieldName, primitiveType string) {
 	if tagValue != ignoreTag {
 		buff.WriteString(fmt.Sprintf("json.WriteString(`%s:`)\n", tagValue))
 	}
-	buff.WriteString(fmt.Sprintf("json.WriteString(fmt.Sprintf(\"\", p.%s) + `,`)\n", fieldName))
+
+	switch primitiveType {
+	case INT_TYPE:
+		buff.WriteString(fmt.Sprintf("json.WriteString(strconv.Itoa(p.%s))\n", fieldName))
+	case STRING_TYPE:
+		buff.WriteString(fmt.Sprintf("json.WriteString(`\"` + p.%s + `\"`)\n", fieldName))
+	}
+
+	buff.WriteString(`json.WriteString(",")
+	`)
 }
 
 func processStruct(st *ast.StructType, structName string) {
@@ -109,21 +130,28 @@ func processStruct(st *ast.StructType, structName string) {
 		tagValue, _ := getValueFromTag(field.Tag.Value)
 		switch field.Type.(type) {
 		case *ast.ArrayType:
+			buff.WriteString(fmt.Sprintf("json.WriteString(`%s:`)\n", tagValue))
 			buff.WriteString("json.WriteString(`[`)\n")
 			buff.WriteString(fmt.Sprintf("for i := range p.%s {\n", field.Names[0]))
-			processPrimitiveValue(ignoreTag, field.Names[0].Name+"[i]")
+			primitiveType := field.Type.(*ast.ArrayType).Elt.(*ast.Ident).Name
+			processPrimitiveValue(ignoreTag, field.Names[0].Name+"[i]", primitiveType)
 			buff.WriteString("}\n")
+			buff.WriteString("truncateLastComma(&json)\n")
 			buff.WriteString("json.WriteString(`],`)\n")
 		case *ast.MapType:
 			buff.WriteString(fmt.Sprintf("for k, v := range p.%s {\n", field.Names[0]))
 			buff.WriteString("json.WriteString(`\"` + k + `\"` + `:` + `\"` + v + `\",`)")
 			buff.WriteString("}\n")
-		default:
-			processPrimitiveValue(tagValue, field.Names[0].Name)
+			buff.WriteString("truncateLastComma(&json)\n")
+		case *ast.Ident:
+			primitiveType := field.Type.(*ast.Ident).Name
+			processPrimitiveValue(tagValue, field.Names[0].Name, primitiveType)
 		}
 	}
 	buff.WriteString(`json.WriteString("}")
 	`)
+	buff.WriteString("truncateLastComma(&json)\n")
+	buff.WriteString(returnStmnt)
 	buff.WriteString(endBlock)
 }
 
@@ -141,12 +169,15 @@ func main() {
 	structDeclarations, structNames := getStructDeclarations(typeDeclarations)
 
 	buff.WriteString(importStmnt)
+	buff.WriteString(helpers)
 	processStructs(structDeclarations, structNames)
 
-	fmt.Println(buff.String())
-
-	formattedBytes, err := format.Source(buff.Bytes()) // Handle err latr
-	fmt.Println(string(formattedBytes), err)
+	formattedBytes, err := format.Source(buff.Bytes())
+	if err != nil {
+		errors.New(err.Error())
+	}
 
 	ioutil.WriteFile("./generated_json.go", formattedBytes, 0644)
 }
+
+// Usefull link: https://stackoverflow.com/questions/20234342/get-a-simple-string-representation-of-a-struct-field-s-type

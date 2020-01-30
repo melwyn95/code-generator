@@ -43,11 +43,11 @@ func marshall(source interface{}, buff *bytes.Buffer, tag string) {
 			val := value.MapIndex(key)
 			buff.WriteString(fmt.Sprintf(`"%s":"%s",`, key, val))
 		}
-	case reflect.Float64, reflect.String:
+	case reflect.Int, reflect.String:
 		if tag == START {
 			buff.WriteString(fmt.Sprintf(`"%s",`, value))
 		} else {
-			buff.WriteString(fmt.Sprintf(`"%s":"%v",`, tag, value))
+			buff.WriteString(fmt.Sprintf(`"%s":%#v,`, tag, value))
 		}
 	}
 }

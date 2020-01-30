@@ -4,7 +4,7 @@ package common
 
 type Profile struct {
 	Name        string            `json:"name"`
-	Experience  float64           `json:"experience"`
+	Experience  int               `json:"experience"`
 	Hobbies     []string          `json:"hobbies"`
 	RandomStuff map[string]string `json:"random_stuff"`
 }

@@ -1,4 +1,4 @@
-package reflection
+package main
 
 import (
 	"testing"
@@ -19,7 +19,7 @@ func TestMarshallJSON(t *testing.T) {
 	}
 
 	want := `{"name":"Melwyn Saldanha","experience":2,"hobbies":["Solve rubix cubes","Watch movies"],"github":"https://github.com/melwyn95","twitter":"https://twitter.com/MelwynSaldanha"}`
-	gotbytes, err := MarshallJSON(profile)
+	gotbytes, err := profile.MarshalJSON()
 	got := string(gotbytes)
 
 	if err != nil {
