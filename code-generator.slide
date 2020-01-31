@@ -1,0 +1,26 @@
+Code generation in Go 
+Using Templates and AST
+1 Feb 2020
+Tags: go, ast, template, code-generator
+
+Melwyn Saldanha
+Software Engineer, shaadi.com
+melwyn95@gmail.com
+@MelwynSaldanha
+
+* Go is a simple language
+- C like, limited set of keywords
+- Python like *readability* & C like *preformance*
+- UNIX like *simplicity* 
+- Designed by Rob Pike, Ken Thompson, ...
+- Limited type system [No generics]
+
+* Code generators
+- Template based (workaround for lack of generics)
+- AST based
+
+* Template based code generator
+- Demo: list to map
+
+* Reflection
+- 

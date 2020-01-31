@@ -1,0 +1,48 @@
+Make slides and .slide files 
+  + test via go present 
+  + make google slides
+Take screenshots of benchmarks
+
+1. Introduce yourself
+
+2. Go simple language
+- Designed by Rob Pike and Ken Thompson, 
+  they like simplicity reflected in the design of UNIX
+- Little more details why go is a simple language
+- No generics 
+
+3. Introduce your topic
+
+code-generators two type I encountered so far
+- Template Based
+- Ast Based
+
+Template generator
+- converting a list of struct into a map
+
+Reflection
+- interface{} - pair ??
+- Type, Value, Kind function
+- json example
+- advantage: simple code
+- disadvantage: repetitive rework, can save CPU and memory by generating code
+
+AST code-generator
+- AST - go/ast
+- //go:generate ---
+- code walkthrough
+- state that go has a benchmarking tool in built in the testing package 
+  use -benchmem to look to memory allocations
+- benchmarks
+
+Code Generators @ shaadi
+- Most code is generated, we only write business logic
+- since code is generated, there can be no silly mistakes, 
+  deploy with confidence
+- benchmark 
+
+More Reading
+- Laws of Reflection - Rob Pike (go blog)
+- Go code generation - Rob Pike (go blog)
+
+ 
