@@ -12,7 +12,7 @@ func TestMarshallJSON(t *testing.T) {
 		Name:       "Melwyn Saldanha",
 		Experience: 2,
 		Hobbies:    []string{"Solve rubix cubes", "Watch movies"},
-		RandomStuff: map[string]string{
+		Social: map[string]string{
 			"github":  "https://github.com/melwyn95",
 			"twitter": "https://twitter.com/MelwynSaldanha",
 		},

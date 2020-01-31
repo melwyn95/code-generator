@@ -32,7 +32,7 @@ func (p *Profile) MarshalJSON() ([]byte, error) {
 	}
 	truncateLastComma(&json)
 	json.WriteString(`],`)
-	for k, v := range p.RandomStuff {
+	for k, v := range p.Social {
 		json.WriteString(`"` + k + `"` + `:` + `"` + v + `",`)
 	}
 	truncateLastComma(&json)
