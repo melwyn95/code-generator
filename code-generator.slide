@@ -20,14 +20,21 @@ melwyn95@gmail.com
 - AST based
 
 * Template based code generator
+- Generic Types and Generics Functions
+- Lot of code repetition in Go since no generics
+- Work around: template code generator
 - Demo: list to map
 
 * Reflection
-- 
+- encoding/json json.Marshal...
+- How interface{} is stored in Go
+- package reflect, reflect.ValueOf, reflect.TypeOf & reflect.Kind
+- Demo: JSON marshalling using reflection
 
 * AST code generator
 - Go std lib - go/parser & go/ast
-- //go:generate ...
+- go generate and //go:generate ...
+- Demo: JSON marshalling using generated code
 
 * Code generators @ shaadi
 - Most boilerplate code is generated

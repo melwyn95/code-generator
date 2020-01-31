@@ -50,4 +50,4 @@ https://medium.com/capital-one-tech/closures-are-the-generics-for-go-cb32021fb5b
 https://medium.com/capital-one-tech/learning-to-use-go-reflection-part-2-c91657395066
 https://medium.com/capital-one-tech/learning-to-use-go-reflection-822a0aed74b7
 
- 
+coding in C need to do manual memory mgmnt (complex at times... causes memory leaks...) 
