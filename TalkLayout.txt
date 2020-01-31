@@ -45,4 +45,9 @@ More Reading
 - Laws of Reflection - Rob Pike (go blog)
 - Go code generation - Rob Pike (go blog)
 
+https://godoc.org/golang.org/x/tools/present
+https://medium.com/capital-one-tech/closures-are-the-generics-for-go-cb32021fb5b5
+https://medium.com/capital-one-tech/learning-to-use-go-reflection-part-2-c91657395066
+https://medium.com/capital-one-tech/learning-to-use-go-reflection-822a0aed74b7
+
  

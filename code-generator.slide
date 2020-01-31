@@ -24,3 +24,17 @@ melwyn95@gmail.com
 
 * Reflection
 - 
+
+* AST code generator
+- Go std lib - go/parser & go/ast
+- //go:generate ...
+
+* Code generators @ shaadi
+- Most boilerplate code is generated
+- Focus is on business logic
+- Since code is generated -> No silly mistakes -> Deploy with confidence
+- Generators: dependency, json, copy, model  
+
+* More reading
+- [[https://blog.golang.org/generate][Generating code]] - Rob Pike (go blog)
+- [[https://blog.golang.org/laws-of-reflection][The Laws of Reflection]] - Rob Pike (go blog)
