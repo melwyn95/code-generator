@@ -11,7 +11,7 @@ var profile common.Profile = common.Profile{
 	Name:       "Melwyn Saldanha",
 	Experience: 2,
 	Hobbies:    []string{"Solve rubix cubes", "Watch movies"},
-	RandomStuff: map[string]string{
+	Social: map[string]string{
 		"github":  "https://github.com/melwyn95",
 		"twitter": "https://twitter.com/MelwynSaldanha",
 	},
@@ -26,14 +26,5 @@ func BenchmarkReflectionJSONMarshal(b *testing.B) {
 func BenchmarkGeneratedJSONMarshall(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		profile.MarshalJSON()
-	}
-}
-
-func TestReflectionAndGeneratedCode(t *testing.T) {
-	reflectionJSON, _ := reflection.MarshallJSON(profile)
-	generatorJSON, _ := profile.MarshalJSON()
-
-	if string(reflectionJSON) != string(generatorJSON) {
-		t.Errorf("Reflection: %s \n Generator: %s", string(reflectionJSON), string(generatorJSON))
 	}
 }
